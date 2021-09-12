@@ -20,8 +20,6 @@ import { createUserLoader } from './utils/createUserLoader';
 
 /* creats main function to run async. */
 const main = async () => {
-
-
     const conn = await createConnection({
         type: 'postgres',
         logging: true,
@@ -46,7 +44,7 @@ const main = async () => {
     const RedisStore = ConnectRedis(session)
     const redis= new Redis(process.env.REDIS_URL);
 
-    app.set('proxy', 1); // notify there is a proxy infront > nginx
+    app.set('trust proxy', 1); // notify there is a proxy infront > nginx
 
     redis.on("error", err => {
         console.log(err);
@@ -71,7 +69,7 @@ const main = async () => {
                 httpOnly: true,
                 sameSite: "lax",// csrf
                 secure: __prod__, // only works in https
-                domain: __prod__ ? "shriller44.co.uk" : undefined
+                domain: __prod__ ? ".shriller44.co.uk" : undefined
             },
             saveUninitialized: false, // only save sessions if data is present.
             secret: process.env.SESSION_SECRET,
@@ -99,6 +97,7 @@ const main = async () => {
 
     await apolloServer.start()
 
+    console.log(process.env.CORS_ORIGIN);
     const corsOptions = {
         origin:process.env.CORS_ORIGIN,
         credentials: true,

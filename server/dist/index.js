@@ -51,7 +51,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     const RedisStore = connect_redis_1.default(express_session_1.default);
     const redis = new ioredis_1.default(process.env.REDIS_URL);
-    app.set('proxy', 1); // notify there is a proxy infront > nginx
+    app.set('trust proxy', 1); // notify there is a proxy infront > nginx
     redis.on("error", err => {
         console.log(err);
     });
@@ -72,7 +72,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             httpOnly: true,
             sameSite: "lax",
             secure: constants_1.__prod__,
-            domain: constants_1.__prod__ ? "shriller44.co.uk" : undefined
+            domain: constants_1.__prod__ ? ".shriller44.co.uk" : undefined
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
@@ -94,6 +94,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         })
     });
     yield apolloServer.start();
+    console.log(process.env.CORS_ORIGIN);
     const corsOptions = {
         origin: process.env.CORS_ORIGIN,
         credentials: true,
