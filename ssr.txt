@@ -1,0 +1,8 @@
+me -> browse http://localhost:3000
+   -> next.js server
+   -> request graphql server at localhost:4000 > fetch posts
+   -> builds HTML
+   -> sends back to the browser 
+  
+ssr does not occur if we press back after refresh from re routing as its making the request
+again from the browser instead.

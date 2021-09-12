@@ -1,0 +1,3 @@
+ssr
+  browser -> next.js -> graphql api
+  (client side) -> graphql api
